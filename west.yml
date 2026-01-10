@@ -1,0 +1,17 @@
+west:
+  url: https://github.com/zephyrproject-rtos/west
+  revision: v1.5.0
+
+manifest:
+  remotes:
+    - name: sdk-nrf
+      url-base: https://github.com/nrfconnect
+  projects:
+    - name: nrf
+      remote: sdk-nrf
+      revision: v3.2.1
+      repo-path: sdk-nrf
+      import:
+        path-prefix: external/sdk
+  self:
+    path: manifest-repo

@@ -1,0 +1,44 @@
+# Build folder
+build/
+
+# External folder
+external/
+
+# Zephyr build artifacts
+*.o
+*.a
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.sym
+
+# Generated files
+*.pyc
+*.pyo
+__pycache__/
+.cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Zephyr specific
+zephyr/
+.west/
+modules/
+tools/
+
+# SDK and toolchain
+nrfxlib/
+mbedtls/
+mcuboot/
+bootloader/
+
+# OS files
+.DS_Store
+Thumbs.db
