@@ -14,4 +14,4 @@ manifest:
       import:
         path-prefix: external/sdk
   self:
-    path: .
+    path: lirisv4
