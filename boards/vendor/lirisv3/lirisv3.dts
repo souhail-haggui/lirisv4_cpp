@@ -1,0 +1,131 @@
+/*
+ * Copyright (c) 2021 Nordic Semiconductor ASA
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf52832_qfaa.dtsi>
+#include "lirisv3-pinctrl.dtsi"
+
+/ {
+	model = "Custom Plank Board";
+	compatible = "vendor,custom-plank";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+	aliases {
+		optic-led = &led0;
+		sensor-enable = &led1;
+		logic-test = &led0;
+		watchdog0 = &wdt0;
+		eeprom-0 = &eeprom25aa02;
+	};
+
+	blink_led: blink-led {
+		compatible = "blink-gpio-led";
+		led-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+		blink-period-ms = <500>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&gpio0 29 GPIO_ACTIVE_HIGH>;
+			label = "Optic Led";
+		};
+		led1: led_1 {
+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
+			label = "Sensor card enable";
+		};
+	};
+};
+
+&uicr {
+	gpio-as-nreset;
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&uart0 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+spi0: &spi0 {
+	compatible = "nordic,nrf-spim";
+	/* Cannot be used together with i2c0. */
+	status = "okay";
+    cs-gpios = <&gpio0 2 GPIO_ACTIVE_LOW>,
+			   <&gpio0 4 GPIO_ACTIVE_LOW>,
+			   <&gpio0 13 GPIO_ACTIVE_LOW>;
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-names = "default", "sleep";
+	adt7320: adt7320@0 {
+		compatible = "adi,adt7320";
+		reg = <0x0>;
+		spi-max-frequency = <8000000>;
+	};
+    s25fl064: s25fl064l@1 {
+		compatible = "jedec,spi-nor";
+		reg = <1>;
+		spi-max-frequency = <8000000>;
+		jedec-id = [01 60 17];
+		size = <67108864>;
+	};
+    cy15b104q: cy15b104q@2 {
+        compatible = "cypress,cy15b104q";
+        reg = <2>;   // SPI chip select (must match cs-gpios index)
+        size = <16777216>;
+        spi-max-frequency = <20000000>;
+        label = "cy15b104q";
+    };
+};
+
+spi1: &spi1 {
+	compatible = "nordic,nrf-spim";
+	status = "okay";
+    cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>,
+			   <&gpio0 8 GPIO_ACTIVE_LOW>,
+			   <&gpio0 9 GPIO_ACTIVE_HIGH>;
+	pinctrl-0 = <&spi1_default>;
+	pinctrl-1 = <&spi1_sleep>;
+	pinctrl-names = "default", "sleep";
+	eeprom25aa02: eeprom25aa02@0 {
+		compatible = "microchip,25aa02";
+		reg = <0x0>;
+		spi-max-frequency = <4000000>;
+		size = <256>;
+		pagesize = <16>;
+		address-width = <8>;
+		timeout = <5>;
+	};
+	ltc2640: ltc2640@1 {
+		compatible = "adi,ltc2640";
+		reg = <0x1>;
+		spi-max-frequency = <4000000>;
+		resolution = <12>;
+		voltage-reference-mv = <2500>;
+		#io-channel-cells = <1>;
+	};
+	ad7685: ad7685@2 {
+		compatible = "adi,ad7685";
+		reg = <0x2>;
+		spi-max-frequency = <4000000>;
+	};
+};

@@ -1,0 +1,22 @@
+config ADT7320
+	bool "ADT7320 Temperature Sensor"
+	default y
+	select SPI
+	help
+	  Enable the driver for Analog Devices ADT7320 High-Accuracy
+	  16-bit Digital SPI Temperature Sensors
+
+config ADT7320_DEBUG_LEVEL
+	int "adt7320 default debug level"
+	default 3
+	range 0 4
+	help
+	  Default adt7320 debug logging level for Zephyr integration code
+	  0 No debug
+	  1 Error
+	  2 State change
+	  3 Information
+	  4 Verbose
+
+
+
