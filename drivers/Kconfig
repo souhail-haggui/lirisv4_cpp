@@ -1,0 +1,10 @@
+# Copyright (c) 2021 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Drivers"
+rsource "blink/Kconfig"
+rsource "eeprom/Kconfig"
+rsource "flash/Kconfig"
+rsource "sensor/Kconfig"
+rsource "dac/Kconfig"
+endmenu

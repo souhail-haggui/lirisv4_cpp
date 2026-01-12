@@ -1,0 +1,20 @@
+config FRAM_CY15B104Q
+	bool "Cypress CY15B104Q FRAM driver"
+	depends on SPI
+	default n
+	help
+	  Enable the driver for external microchip eeprom module.
+
+config FRAM_CY15B104Q_DEBUG_LEVEL
+	int "fram default debug level"
+	default 4
+	range 0 4
+	help
+	  Default fram debug logging level for Zephyr integration code
+	  0 No debug
+	  1 Error
+	  2 State change
+	  3 Information
+	  4 Verbose
+
+

@@ -1,0 +1,20 @@
+config EEPROM_25AAA
+	bool "Microchip Eeprom 25aa0248 driver"
+	depends on SPI
+	default n
+	help
+	  Enable the driver for external microchip eeprom module.
+
+config EEPROM_DEBUG_LEVEL
+	int "eeprom default debug level"
+	default 4
+	range 0 4
+	help
+	  Default eeprom debug logging level for Zephyr integration code
+	  0 No debug
+	  1 Error
+	  2 State change
+	  3 Information
+	  4 Verbose
+
+

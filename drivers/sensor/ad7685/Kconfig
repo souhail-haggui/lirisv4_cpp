@@ -1,0 +1,21 @@
+config AD7685
+	bool "AD7685 16-Bits SPI ADC"
+	default y
+	select SPI
+	help
+	  Enable the driver for Analog Devices AD7685 High-Accuracy
+	  16-bit Digital SPI ADC.
+
+config AD7685_DEBUG_LEVEL
+	int "AD7685 default debug level"
+	default 3
+	range 0 4
+	help
+	  Default AD7685 debug logging level for Zephyr integration code
+	  0 No debug
+	  1 Error
+	  2 State change
+	  3 Information
+	  4 Verbose
+
+

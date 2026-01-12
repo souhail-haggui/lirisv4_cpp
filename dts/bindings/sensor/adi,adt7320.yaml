@@ -1,0 +1,6 @@
+description: ADT7320 16-Bit digital SPI temperature sensor
+
+compatible: "adi,adt7320"
+
+include: [sensor-device.yaml, spi-device.yaml]
+

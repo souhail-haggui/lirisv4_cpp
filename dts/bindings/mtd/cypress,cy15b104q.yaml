@@ -1,0 +1,16 @@
+# Cypress CY15B104Q FRAM SPI memory
+description: Cypress 512 Kbit (64K x 8) SPI FRAM
+
+compatible: "cypress,cy15b104q"
+
+include: [spi-device.yaml]
+
+properties:
+  size:
+    type: int
+    required: true
+    description: Memory size in bytes.
+  spi-max-frequency:
+    type: int
+    default: 40000000
+    description: Maximum SPI bus frequency (Hz).

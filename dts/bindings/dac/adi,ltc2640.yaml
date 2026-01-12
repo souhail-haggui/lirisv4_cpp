@@ -1,0 +1,25 @@
+# Copyright (c) 2019, Linaro Limited
+# SPDX-License-Identifier: Apache-2.0
+
+include: [dac-controller.yaml, spi-device.yaml]
+
+description: LTC2640 16-Bit digital SPI DAC
+
+compatible: "adi,ltc2640"
+
+properties:
+  "#io-channel-cells":
+    const: 1
+
+  resolution:
+    type: int
+    required: true
+    description: DAC resolution.
+
+  voltage-reference-mv:
+    type: int
+    required: true
+    description: DAC reference voltage in mV.
+
+io-channel-cells:
+  - output
