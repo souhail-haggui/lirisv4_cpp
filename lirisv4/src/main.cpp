@@ -60,6 +60,11 @@ static struct fs_mount_t littlefs_mnt = {
  * 
  * This class encapsulates LED device initialization and control,
  * following RAII principles for resource management.
+ * 
+ * Note: Initialization is performed separately from construction to allow
+ * for error handling. Device initialization may fail if the hardware is not
+ * ready, so we return a boolean from initialize() rather than throwing
+ * exceptions (which are disabled in embedded systems).
  */
 class BlinkController {
 private:
@@ -67,6 +72,10 @@ private:
 	bool initialized;
 
 public:
+	/**
+	 * Constructor - initializes member variables but does not initialize device.
+	 * Device initialization is deferred to initialize() to allow proper error handling.
+	 */
 	BlinkController() : blink_device(nullptr), initialized(false) {
 	}
 	

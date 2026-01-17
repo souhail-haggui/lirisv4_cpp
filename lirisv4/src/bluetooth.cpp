@@ -37,7 +37,6 @@ static const struct bt_data sd[] = {
  */
 class BluetoothManager {
 private:
-	static BluetoothManager* instance;
 	struct k_work advertise_work;
 	
 	// Private constructor for Singleton pattern
@@ -101,12 +100,13 @@ private:
 public:
 	/**
 	 * Get the singleton instance
+	 * Returns a reference to the single BluetoothManager instance.
+	 * Uses a static local variable (Meyer's Singleton) to ensure
+	 * thread-safe initialization and proper lifetime management.
 	 */
 	static BluetoothManager& getInstance() {
-		if (instance == nullptr) {
-			instance = new BluetoothManager();
-		}
-		return *instance;
+		static BluetoothManager instance;
+		return instance;
 	}
 	
 	/**
@@ -140,9 +140,6 @@ public:
 		getInstance().onBluetoothReady(err);
 	}
 };
-
-// Initialize static instance pointer
-BluetoothManager* BluetoothManager::instance = nullptr;
 
 // Define connection callbacks using static methods
 BT_CONN_CB_DEFINE(conn_callbacks) = {
