@@ -39,9 +39,6 @@ class BluetoothManager {
 private:
 	struct k_work advertise_work;
 	
-	// Forward declaration of static callbacks
-	static void advertiseCallback(struct k_work *work);
-	
 	// Private constructor for Singleton pattern
 	BluetoothManager() {
 		k_work_init(&advertise_work, advertiseCallback);
