@@ -9,5 +9,10 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(app LANGUAGES CXX C)
 
+# Add C++ compiler flags
+target_compile_options(app PRIVATE
+  $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>
+)
+
 target_sources(app PRIVATE src/main.cpp)
 target_sources_ifdef(CONFIG_MCUMGR_TRANSPORT_BT app PRIVATE src/bluetooth.cpp)

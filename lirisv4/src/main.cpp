@@ -5,6 +5,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#define LOG_LEVEL LOG_LEVEL_DBG
+#include <zephyr/logging/log.h>
+
 extern "C" {
 #include <zephyr/kernel.h>
 #include <zephyr/stats/stats.h>
@@ -18,9 +21,6 @@ extern "C" {
 #ifdef CONFIG_MCUMGR_GRP_STAT
 #include <zephyr/mgmt/mcumgr/grp/stat_mgmt/stat_mgmt.h>
 #endif
-
-#define LOG_LEVEL LOG_LEVEL_DBG
-#include <zephyr/logging/log.h>
 
 #include <drivers/blink.h>
 }
