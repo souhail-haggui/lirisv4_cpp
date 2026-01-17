@@ -223,13 +223,18 @@ int main(void)
 	blinkController.setPeriod(500);
 	
 	// Initialize Stats Manager
+	// Note: Statistics failures are non-critical, so we continue even if initialization fails
 	StatsManager statsManager;
-	statsManager.initialize();
+	if (!statsManager.initialize()) {
+		LOG_WRN("Statistics initialization failed, continuing without stats");
+	}
 	
 	// Mount filesystem if configured
 #ifdef CONFIG_MCUMGR_GRP_FS
 	FileSystemManager fsManager(&littlefs_mnt);
-	fsManager.mount();
+	if (!fsManager.mount()) {
+		LOG_WRN("Filesystem mounting failed, continuing without filesystem");
+	}
 #endif
 
 	// Start Bluetooth advertising if configured
