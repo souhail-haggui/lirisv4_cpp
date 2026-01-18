@@ -19,21 +19,24 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t zephyr-gnuarm projects/docker
+          docker build \
+            --build-arg USER_UID=$(id -u) \
+            --build-arg USER_GID=$(id -g) \
+            -t zephyr-gnuarm projects/docker
 
       - name: Initialize West workspace
         run: |
-          docker run --rm -v ${PWD}:${PWD} -w ${PWD} zephyr-gnuarm \
+          docker run --rm -u $(id -u):$(id -g) -v ${PWD}:${PWD} -w ${PWD} zephyr-gnuarm \
             bash -c "west init -l projects && west update"
 
       - name: Install Python requirements
         run: |
-          docker run --rm -v ${PWD}:${PWD} -w ${PWD} zephyr-gnuarm \
+          docker run --rm -u $(id -u):$(id -g) -v ${PWD}:${PWD} -w ${PWD} zephyr-gnuarm \
             pip3 install --user -r external/sdk/zephyr/scripts/requirements.txt
 
       - name: Build project
         run: |
-          docker run --rm -v ${PWD}:${PWD} -w ${PWD}/projects \
+          docker run --rm -u $(id -u):$(id -g) -v ${PWD}:${PWD} -w ${PWD}/projects \
             -e ZEPHYR_BASE=${PWD}/external/sdk/zephyr \
             zephyr-gnuarm \
             west build -p always -b lirisv3 --sysbuild lirisv4

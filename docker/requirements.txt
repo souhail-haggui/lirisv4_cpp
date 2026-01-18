@@ -1,0 +1,14 @@
+# Zephyr build requirements (minimal)
+pyelftools>=0.29
+pykwalify
+PyYAML>=6.0
+canopen
+packaging
+progress
+psutil
+pylink-square
+anytree
+intelhex
+cbor2
+click
+cryptography
